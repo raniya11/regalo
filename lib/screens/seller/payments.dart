@@ -1,0 +1,50 @@
+import 'package:flutter/material.dart';
+import 'package:regalo/constants/colors.dart';
+import 'package:regalo/constants/decorations.dart';
+import 'package:regalo/utilities/apptext.dart';
+import 'package:regalo/utilities/headerwidget.dart';
+
+class PaymentDetails extends StatefulWidget {
+  const PaymentDetails({Key? key}) : super(key: key);
+
+  @override
+  State<PaymentDetails> createState() => _PaymentDetailsState();
+}
+
+class _PaymentDetailsState extends State<PaymentDetails> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+    return Scaffold(
+      drawer: Drawer(),
+      appBar: AppBar(
+        backgroundColor: priaryColor,
+        //centerTitle: true,
+      ),
+      body: Container(
+        height: size.height,
+        width: size.width,
+        padding: EdgeInsets.all(20),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+
+              AppText(
+                text: "All Payments",
+                size: 18,
+                fw: FontWeight.w800,
+                color: priaryColor,
+              ),
+              SizedBox(
+                height: 10,
+              ),
+
+            ],
+          ),
+        ),
+
+      ),
+    );
+  }
+}
