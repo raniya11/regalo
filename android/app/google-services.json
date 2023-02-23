@@ -1,33 +1,33 @@
 {
   "project_info": {
-    "project_number": "857137159077",
-    "project_id": "regalo-df783",
-    "storage_bucket": "regalo-df783.appspot.com"
+    "project_number": "616835843008",
+    "project_id": "regalo-6ac0f",
+    "storage_bucket": "regalo-6ac0f.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:857137159077:android:97d78edf0d6d23a993e64c",
+        "mobilesdk_app_id": "1:616835843008:android:ad2f5523d8fffdc8adfe25",
         "android_client_info": {
           "package_name": "com.example.regalo"
         }
       },
       "oauth_client": [
         {
-          "client_id": "857137159077-gol0jjpvkfm3gmmenidl7iq9ir0ebv6u.apps.googleusercontent.com",
+          "client_id": "616835843008-17cvp631674ql1nghmb190b6fktgoulm.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD1GXTAdyHgqd7e4e5-M_l81OlzHrw6bHU"
+          "current_key": "AIzaSyAJ-6AN1vmUmhv8VlM5zxLtfAZssLZXRmE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "857137159077-gol0jjpvkfm3gmmenidl7iq9ir0ebv6u.apps.googleusercontent.com",
+              "client_id": "616835843008-17cvp631674ql1nghmb190b6fktgoulm.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

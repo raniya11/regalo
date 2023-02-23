@@ -4,6 +4,7 @@ import 'package:regalo/constants/decorations.dart';
 import 'package:regalo/screens/seller/orderdetails.dart';
 import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
+
 class FeedbackPage extends StatefulWidget {
   const FeedbackPage({Key? key}) : super(key: key);
 
@@ -16,7 +17,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: Drawer(),
+
       appBar: AppBar(
         backgroundColor: priaryColor,
         //centerTitle: true,
@@ -43,22 +44,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
 
                 height: 700,
                 // color: Colors.red,
-                child: ListView.builder(
-                    itemCount: 20,
 
-                    itemBuilder: (context,index){
-
-                      return Card(
-                        child: ListTile(
-                          leading: Container(
-                            child: Image.asset('assets/images/jacket.png'),
-                          ),
-                          title: Text("Hello 2400/"),
-                          subtitle: Text("Description"),
-                          trailing: Icon(Icons.forward,color: priaryColor,),
-                        ),
-                      );
-                    }),
               )
 
             ],

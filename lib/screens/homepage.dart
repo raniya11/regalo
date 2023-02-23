@@ -22,6 +22,12 @@ UserHomePage({Key? key,this.email,this.id,this.name,this.status}) : super(key: k
 
 class _UserHomePageState extends State<UserHomePage> {
   List category = ["Scrapbooks", "Frames", "Hamper", "Bouquet"];
+  List category_img = [
+    "scrapbook.jpg",
+    "frames.jpg",
+    "hanper.jpg",
+    "boquet.jpg"
+  ];
 
   List<Map<String, dynamic>> scrapBook = [
     {"id": 1, "title": "Scrapbook1", 'desc': "Sample Desc"}
@@ -127,10 +133,12 @@ class _UserHomePageState extends State<UserHomePage> {
                                 image: DecorationImage(
                                     scale: 4,
                                     image: AssetImage(
-                                      'assets/images/logonew.png',
-                                    ))),
+
+                                        'assets/images/'+category_img[index].toString()),fit: BoxFit.cover
+                            )),
+
                             child:
-                                Center(child: AppText(text: category[index])),
+                                AppText(text: category[index],color: priaryColor,),
                           ),
                         );
                       })),
@@ -147,6 +155,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 height: 10,
               ),
               Container(
+                color: contColor,
                   height: 150,
                   child:
 
@@ -155,12 +164,15 @@ class _UserHomePageState extends State<UserHomePage> {
 
 
                   Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewAllStoreCategory(
+                    cemail: widget.email,
+                      cid: widget.id,
+                    cname: widget.name,
 
 
                   )));
                 },
                 child: Center(
-                  child: Text("Store"),
+                  child:AppText(text: "Stores",size: 20,color: priaryColor,),
                 ),
               )
               ),

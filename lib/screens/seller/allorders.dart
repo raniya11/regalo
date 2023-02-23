@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:regalo/constants/colors.dart';
 import 'package:regalo/constants/decorations.dart';
@@ -6,13 +7,22 @@ import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
 class AllOrders extends StatefulWidget {
-  const AllOrders({Key? key}) : super(key: key);
+  String?sellerid;
+  AllOrders({Key? key,this.sellerid}) : super(key: key);
 
   @override
   State<AllOrders> createState() => _AllOrdersState();
 }
 
 class _AllOrdersState extends State<AllOrders> {
+  var id;
+  @override
+  void initState() {
+    id=widget.sellerid;
+    print(id);
+    // TODO: implement initState
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -44,32 +54,50 @@ class _AllOrdersState extends State<AllOrders> {
 
                 height: 700,
                 // color: Colors.red,
-                child: ListView.builder(
-                    itemCount: 20,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance.collection('orders').snapshots(),
+                  builder: (context,snapshot){
 
-                    itemBuilder: (context,index){
+                    if(snapshot.hasData){
 
-                      return InkWell(
-                        onTap: (){
+                      ListView.builder(
+                          itemCount: snapshot.data!.docs.length,
 
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OrderDetailsPage()));
-                        },
+                          itemBuilder: (context,index){
 
-                        child: Card(
-                          child: ListTile(
-                            leading: Container(
-                              child: Image.asset('assets/images/jacket.png'),
-                            ),
-                            title: Text("Hello 2400/"),
-                            subtitle: Text("Description"),
-                            trailing: Icon(Icons.forward,color: priaryColor,),
-                          ),
-                        ),
+                            return InkWell(
+                              onTap: (){
+
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OrderDetailsPage()));
+                              },
+
+                              child: Card(
+                                child: ListTile(
+                                  leading: Container(
+                                    child: Image.asset('assets/images/jacket.png'),
+                                  ),
+                                  title: Text("Hello 2400/"),
+                                  subtitle: Text("Description"),
+                                  trailing: Icon(Icons.forward,color: priaryColor,),
+                                ),
+                              ),
+                            );
+                          });
+                    }
+                    if(snapshot.hasData&& snapshot.data!.docs.length==0){
+
+                      return Center(
+                        child: Text("hello"),
                       );
-                    }),
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                )
               )
             ],
           ),

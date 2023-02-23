@@ -44,22 +44,7 @@ class _ComplaintsPageState extends State<ComplaintsPage> {
 
                 height: 700,
                 // color: Colors.red,
-                child: ListView.builder(
-                    itemCount: 20,
 
-                    itemBuilder: (context,index){
-
-                      return Card(
-                        child: ListTile(
-                          leading: Container(
-                            child: Image.asset('assets/images/jacket.png'),
-                          ),
-                          title: Text("Hello 2400/"),
-                          subtitle: Text("Description"),
-                          trailing: Icon(Icons.forward,color: priaryColor,),
-                        ),
-                      );
-                    }),
               )
 
             ],

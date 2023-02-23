@@ -4,6 +4,7 @@ import 'package:regalo/constants/colors.dart';
 import 'package:regalo/constants/decorations.dart';
 import 'package:regalo/screens/user/products.dart';
 import 'package:regalo/utilities/apptext.dart';
+import 'package:regalo/utilities/container.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 import 'package:regalo/screens/allcategory.dart';
 import 'package:regalo/screens/allstores.dart';
@@ -12,13 +13,21 @@ class StoreDetails extends StatefulWidget {
   String? title;
   String? id;
 
-  StoreDetails({Key? key, this.title, this.id}) : super(key: key);
+  String ?cname;
+  String?cemail;
+  String? cid;
+  
+  String?from;
+  int?status;
+
+  StoreDetails({Key? key,this.status, this.title, this.id,this.cname,this.cid,this.cemail,this.from}) : super(key: key);
 
   @override
   State<StoreDetails> createState() => _StoreDetailsState();
 }
 
 class _StoreDetailsState extends State<StoreDetails> {
+
   List category = ["Scrapbooks", "Frames", "Hamper", "Bouquet"];
   List category_img = [
     "scrapbook.jpg",
@@ -28,6 +37,8 @@ class _StoreDetailsState extends State<StoreDetails> {
   ];
   @override
   Widget build(BuildContext context) {
+    print(widget.status.runtimeType);
+    print(widget.status);
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
@@ -44,7 +55,7 @@ class _StoreDetailsState extends State<StoreDetails> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               AppText(
-                text: "Gift Store",
+                text: widget.title,
                 fw: FontWeight.bold,
                 color: priaryColor,
                 size: 22,
@@ -52,11 +63,37 @@ class _StoreDetailsState extends State<StoreDetails> {
               SizedBox(
                 height: 10,
               ),
-              AppText(
-                text: "View all Category",
-                fw: FontWeight.bold,
-                color: priaryColor,
-                size: 18,
+
+              Row(
+                children: [
+                  AppText(
+                    text: "View all Category",
+                    fw: FontWeight.bold,
+                    color: priaryColor,
+                    size: 18,
+
+                  ),  SizedBox(width: 20,),
+
+                ( widget.from=='admin' && widget.status==0)? InkWell(
+                     onTap: (){
+
+                       print(widget.id);
+
+                       FirebaseFirestore.instance.collection('users').doc(widget.id.toString()).update(
+                           {
+
+                             'status':1
+                           }).then((value) {
+                         ScaffoldMessenger.of(context).showSnackBar(
+
+                             SnackBar(
+                                 backgroundColor: priaryColor,
+                                 content: Text("Store Approved")));
+
+                       });
+                     },
+                     child: MyContainer(text: "Approve", ht: 50,color: Colors.red,width: 150,)):SizedBox.shrink()
+                ],
               ),
               SizedBox(
                 height: 10,
@@ -69,13 +106,13 @@ class _StoreDetailsState extends State<StoreDetails> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ViewAllCategory(
-                                        fromstore: true,
-                                        id: widget.id,
-                                        title: category[index])));
+                          widget.from!="admin"?  Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => ViewAllCategory(
+                                      fromstore: true,
+                                      id: widget.id,
+                                      title: category[index]))):null;
                           },
                           child: Card(
                             elevation: 5.0,
@@ -139,31 +176,39 @@ class _StoreDetailsState extends State<StoreDetails> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                Navigator.push(
+
+                                widget.from
+                                !="admin"? Navigator.push(
                                   context,
                                   MaterialPageRoute(
                                     builder: (context) => ProductsPage(
+                                      cname: widget.cname,
+                                      cemail: widget.cemail,
+                                      cid: widget.cid,
+                                      item:snapshot.data!.docs[index]
+                                      ['size'],
                                       price: snapshot.data!.docs[index]
-                                          ['price'],
+                                      ['price'],
                                       name: snapshot.data!.docs[index]
-                                          ['productName'],
+                                      ['productName'],
                                       imgurl: snapshot.data!.docs[index]
-                                          ['productImage'],
+                                      ['productImage'],
                                       offers: snapshot.data!.docs[index]
-                                          ['offer'],
+                                      ['offer'],
                                       description: snapshot.data!.docs[index]
-                                          ['description'],
+                                      ['description'],
                                       sellerid: snapshot.data!.docs[index]
-                                          ['sellerid'],
+                                      ['sellerid'],
                                       productid: snapshot.data!.docs[index]
-                                          ['productId'],
+                                      ['productId'],
                                     ),
                                   ),
-                                );
+                                ):null;
                               },
                               child: Card(
                                 child: ListTile(
                                   leading: Container(
+                                    width: 100,
                                     child: Image.network(snapshot
                                         .data!.docs[index]['productImage']
                                         .toString()),
@@ -181,6 +226,12 @@ class _StoreDetailsState extends State<StoreDetails> {
                           });
                     },
                   )),
+
+              SizedBox(height: 20,),
+
+              
+              
+
             ],
           ),
         ),

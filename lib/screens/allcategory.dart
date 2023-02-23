@@ -12,13 +12,19 @@ class ViewAllCategory extends StatefulWidget {
   String?id;
   bool? fromstore;
 
-  ViewAllCategory({Key? key,this.title,this.id,this.fromstore}) : super(key: key);
+  ViewAllCategory({Key? key,this.title,this.id,this.fromstore=false}) : super(key: key);
 
   @override
   State<ViewAllCategory> createState() => _ViewAllCategoryState();
 }
 
 class _ViewAllCategoryState extends State<ViewAllCategory> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +53,7 @@ class _ViewAllCategoryState extends State<ViewAllCategory> {
                 height: 700,
                // color: Colors.red,
                 child:StreamBuilder<QuerySnapshot>(
-                  stream: widget.fromstore==false?FirebaseFirestore.instance.collection('products').where('category',isEqualTo: widget.title.toString()).snapshots()
+                  stream: widget.fromstore==false?FirebaseFirestore.instance.collection('products').where('category',isEqualTo:widget.title).snapshots()
 
                   :FirebaseFirestore.instance.collection('products').where('category',isEqualTo: widget.title.toString()).where('sellerid',isEqualTo: widget.id.toString()).snapshots(),
 

@@ -12,17 +12,24 @@ import 'package:regalo/screens/seller/productdetails.dart';
 import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
-
 class SellerHomePage extends StatefulWidget {
   String? name;
   String? email;
-  String?id;
+  String? id;
   var status;
   String? address;
   String? pincode;
   String? phone;
-  SellerHomePage({Key? key,this.email,this.id,this.name,this.status,this.address,this.pincode,this.phone}) : super(key: key);
-
+  SellerHomePage(
+      {Key? key,
+      this.email,
+      this.id,
+      this.name,
+      this.status,
+      this.address,
+      this.pincode,
+      this.phone})
+      : super(key: key);
 
   @override
   State<SellerHomePage> createState() => _SellerHomePageState();
@@ -62,9 +69,10 @@ class _SellerHomePageState extends State<SellerHomePage> {
                     SizedBox(
                       width: 14,
                     ),
+
                     AppText(
-                      text: "WELCOME RANIYA",
-                      size: 17,
+                      text: "WELCOME ${widget.name}",
+                      size: 16,
                     )
                   ],
                 ),
@@ -72,18 +80,16 @@ class _SellerHomePageState extends State<SellerHomePage> {
               SizedBox(
                 height: 20,
               ),
-
               Row(
                 children: [
                   InkWell(
-
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => AddProductsPage(
-                                id: widget.id,
-                              )));
+                                    id: widget.id,
+                                  )));
                     },
                     child: Container(
                       child: Center(
@@ -92,8 +98,7 @@ class _SellerHomePageState extends State<SellerHomePage> {
                           size: 18,
                           fw: FontWeight.w800,
                           color: priaryColor,
-                          ),
-
+                        ),
                       ),
                       height: 100,
                       width: 160,
@@ -102,7 +107,7 @@ class _SellerHomePageState extends State<SellerHomePage> {
                     ),
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -114,100 +119,99 @@ class _SellerHomePageState extends State<SellerHomePage> {
                           text: 'View All Products',
                           size: 18,
                           fw: FontWeight.w800,
-                          color: priaryColor,),
+                          color: priaryColor,
+                        ),
                       ),
                       height: 100,
                       width: 160,
                       margin: EdgeInsets.only(right: 10),
                       decoration: contDecortion,
-
                     ),
                   ),
                 ],
               ),
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Row(
                 children: [
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AllOrders()));
-                      },
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => AllOrders(
+                                    sellerid: widget.id,
+                                  )));
+                    },
                     child: Container(
                       child: Center(
                         child: AppText(
                           text: 'All Orders',
                           size: 18,
                           fw: FontWeight.w800,
-                          color: priaryColor,),
+                          color: priaryColor,
+                        ),
                       ),
                       height: 100,
                       width: 160,
                       margin: EdgeInsets.only(right: 10),
                       decoration: contDecortion,
-
                     ),
                   ),
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => PaymentDetails()));
                     },
-
                     child: Container(
                       child: Center(
                         child: AppText(
                           text: 'View All Payments',
                           size: 18,
                           fw: FontWeight.w800,
-                          color: priaryColor,),
+                          color: priaryColor,
+                        ),
                       ),
                       height: 100,
                       width: 160,
                       margin: EdgeInsets.only(right: 10),
                       decoration: contDecortion,
-
                     ),
                   ),
-
-
                 ],
               ),
-
-              SizedBox(height: 10,),
+              SizedBox(
+                height: 10,
+              ),
               Row(
                 children: [
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => FeedbackPage()));
                     },
-
                     child: Container(
                       child: Center(
                         child: AppText(
                           text: 'View Feedback',
                           size: 18,
                           fw: FontWeight.w800,
-                          color: priaryColor,),
+                          color: priaryColor,
+                        ),
                       ),
                       height: 100,
                       width: 160,
                       margin: EdgeInsets.only(right: 10),
                       decoration: contDecortion,
-
                     ),
                   ),
-
-
                   InkWell(
-                    onTap: (){
+                    onTap: () {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -219,26 +223,21 @@ class _SellerHomePageState extends State<SellerHomePage> {
                           text: 'View Complaints',
                           size: 18,
                           fw: FontWeight.w800,
-                          color: priaryColor,),
+                          color: priaryColor,
+                        ),
                       ),
                       height: 100,
                       width: 160,
                       margin: EdgeInsets.only(right: 10),
                       decoration: contDecortion,
-
-
                     ),
                   ),
-
                 ],
               ),
-
             ],
           ),
         ),
-
       ),
     );
   }
 }
-

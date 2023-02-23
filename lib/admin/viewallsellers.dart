@@ -7,7 +7,7 @@ import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
 
-class ViewAllStoreCategory extends StatefulWidget {
+class ViewAllSellers extends StatefulWidget {
 
   String?title;
   String ?cname;
@@ -15,13 +15,13 @@ class ViewAllStoreCategory extends StatefulWidget {
   String? cid;
 
 
-  ViewAllStoreCategory({Key? key,this.title,this.cemail,this.cid,this.cname}) : super(key: key);
+  ViewAllSellers({Key? key,this.title,this.cemail,this.cid,this.cname}) : super(key: key);
 
   @override
-  State<ViewAllStoreCategory> createState() => _ViewAllStoreCategoryState();
+  State<ViewAllSellers> createState() => _ViewAllSellersState();
 }
 
-class _ViewAllStoreCategoryState extends State<ViewAllStoreCategory> {
+class _ViewAllSellersState extends State<ViewAllSellers> {
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +67,9 @@ class _ViewAllStoreCategoryState extends State<ViewAllStoreCategory> {
                             return Card(
                               child: ListTile(
 
+
                                 onTap: (){
+                                  print(snapshot.data!.docs[index]['name']);
 
                                   Navigator.push(context, MaterialPageRoute(builder: (context)=>StoreDetails(
                                     id: snapshot.data!.docs[index]['uid'],
@@ -75,19 +77,19 @@ class _ViewAllStoreCategoryState extends State<ViewAllStoreCategory> {
                                     cid: widget.cid,
                                     cemail: widget.cemail,
                                     cname: widget.cname,
-
+                                    from: "admin",
+status: snapshot.data!.docs[index]['status'],
 
 
                                   )));
 
-                                }
-                                ,
+                                },
                                 // leading: Container(
                                 //   child: Image.network(snapshot.data!.docs[index]['name'].toString()),
                                 // ),
                                 title: Text(snapshot.data!.docs[index]['email']),
                                 subtitle: Text(snapshot.data!.docs[index]['phone']),
-                                trailing: Icon(Icons.forward,color: priaryColor,),
+                                trailing: snapshot.data!.docs[index]['status']==0?Text("Not Approved",style: TextStyle(color: Colors.red,fontSize: 16),):Text("Approved",style: TextStyle(color: Colors.green,fontSize: 18)),
                               ),
                             );
                           });

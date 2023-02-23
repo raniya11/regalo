@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:regalo/admin/adminhomepage.dart';
 import 'package:regalo/common/registerpage.dart';
 import 'package:regalo/constants/colors.dart';
 import 'package:regalo/screens/homepage.dart';
@@ -109,54 +110,62 @@ class _LoginPageState extends State<LoginPage> {
                   child: InkWell(
                     onTap: () {
                       if (_formKey.currentState!.validate()) {
-                        FirebaseAuth.instance
-                            .signInWithEmailAndPassword(
-                                email: usernameController.text.trim(),
-                                password: passwordController.text)
-                            .then((value) {
-                          FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(value.user!.uid)
-                              .get().then((value) {
+                       if(usernameController.text.trim()=="admin@gmail.com" && passwordController.text.trim()=='12345678'){
 
-                                if(value.data()!['usertype']=="user" ){
+                         Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminHomePage()));
 
+                       }
+                       else{
 
-                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>UserHomePage(
+                         FirebaseAuth.instance
+                             .signInWithEmailAndPassword(
+                             email: usernameController.text.trim(),
+                             password: passwordController.text)
+                             .then((value) {
+                           FirebaseFirestore.instance
+                               .collection('users')
+                               .doc(value.user!.uid)
+                               .get().then((value) {
 
-
-                                    name: value.data()!['name'],
-                                    email:  value.data()!['email'],
-                                    id:  value.data()!['uid'],
-                                    status:  value.data()!['status'],
-                                  )), (route) => false);
-
-                                }
-
-                                else if(value.data()!['usertype']=="seller"){
-
-                                  //print(value.data()!['usertype'].toString());
-                                  Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SellerHomePage(
+                             if(value.data()!['usertype']=="user" ){
 
 
-                                    name: value.data()!['name'],
-                                    email:  value.data()!['email'],
-                                    address: value.data()!['address'],
-                                    pincode: value.data()!['pincode'],
-                                    phone: value.data()!['phone'],
-                                    id:  value.data()!['uid'],
-                                    status:  value.data()!['status'],
-                                  )), (route) => false);
+                               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>UserHomePage(
+
+
+                                 name: value.data()!['name'],
+                                 email:  value.data()!['email'],
+                                 id:  value.data()!['uid'],
+                                 status:  value.data()!['status'],
+                               )), (route) => false);
+
+                             }
+
+                             else if(value.data()!['usertype']=="seller"){
+
+                               //print(value.data()!['usertype'].toString());
+                               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SellerHomePage(
+
+
+                                 name: value.data()!['name'],
+                                 email:  value.data()!['email'],
+                                 address: value.data()!['address'],
+                                 pincode: value.data()!['pincode'],
+                                 phone: value.data()!['phone'],
+                                 id:  value.data()!['uid'],
+                                 status:  value.data()!['status'],
+                               )), (route) => false);
 
 
 
-                                }
-                          });
+                             }
+                           });
 
 
 
 
-                        });
+                         });
+                       }
                       }
                     },
                     child: Container(

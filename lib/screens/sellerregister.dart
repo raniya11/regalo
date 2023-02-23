@@ -211,7 +211,7 @@ class _SellerRegisterationState extends State<SellerRegisteration> {
                             'phone':phnController.text,
                             'usertype':"seller",
                             "createdat":DateTime.now(),
-                            'status':1
+                            'status':0
 
                           }).then((value){
                             ScaffoldMessenger.of(context).showSnackBar(

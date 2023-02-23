@@ -44,6 +44,9 @@ dependencies:
   uuid:
   badges:
   shimmer:
+  hive:
+  shared_preferences:
+  hive_flutter:
 
 dev_dependencies:
   flutter_test:

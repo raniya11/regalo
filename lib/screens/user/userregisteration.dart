@@ -175,7 +175,11 @@ class _UserRegisterationState extends State<UserRegisteration> {
                              "createdat":DateTime.now(),
                              'status':1
 
-                           }).then((value){
+                           }).then((value) {
+
+
+
+                           })  . then((value){
                              ScaffoldMessenger.of(context).showSnackBar(
 
                                  SnackBar(
@@ -185,6 +189,9 @@ class _UserRegisterationState extends State<UserRegisteration> {
                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>LoginPage()), (route) => false);
 
                            });
+
+
+
                          });
 
 

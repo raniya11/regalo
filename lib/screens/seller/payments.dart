@@ -16,7 +16,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: Drawer(),
+
       appBar: AppBar(
         backgroundColor: priaryColor,
         //centerTitle: true,
