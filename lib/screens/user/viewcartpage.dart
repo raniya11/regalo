@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/adapters.dart';
@@ -128,6 +129,7 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                   onTap: () async {
                     var items = await getCartItem();
                     var cattoal = await getCartTotal();
+                    print(items);
                     // Navigator.push(context, MaterialPageRoute(builder: (context)=>Payment_Page(
                     //   carttotal:cattoal ,
                     //   shoppingItems:  items,
@@ -135,8 +137,19 @@ class _ShoppingCartScreenState extends State<ShoppingCartScreen> {
                     //   items: widget.itemselected,
                     //   from: widget.from,
                     //
-                    // )));
+      int i=0;              // )));
+  for(i=0;i<items.length;i++){
 
+    FirebaseFirestore.instance.collection('orders').doc(orderid).set({
+
+      'orderid':orderid,
+      'itemname':items[i]['name'],
+      'itemid':items[i]['id'],
+      'price':items[i]['price'],
+      'size':items[i]['size']
+
+    }).then((value) => print("order placed"));
+  }
 
                   },
                   child: Text("View"),

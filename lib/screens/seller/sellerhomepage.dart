@@ -6,7 +6,8 @@ import 'package:regalo/constants/decorations.dart';
 import 'package:regalo/screens/seller/addproducts.dart';
 import 'package:regalo/screens/seller/allorders.dart';
 import 'package:regalo/screens/seller/complaints.dart';
-import 'package:regalo/screens/seller/feedback.dart';
+
+import 'package:regalo/screens/seller/feedbackviewselelr.dart';
 import 'package:regalo/screens/seller/payments.dart';
 import 'package:regalo/screens/seller/productdetails.dart';
 import 'package:regalo/utilities/apptext.dart';
@@ -82,28 +83,30 @@ class _SellerHomePageState extends State<SellerHomePage> {
               ),
               Row(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AddProductsPage(
-                                    id: widget.id,
-                                  )));
-                    },
-                    child: Container(
-                      child: Center(
-                        child: AppText(
-                          text: 'Add Products',
-                          size: 18,
-                          fw: FontWeight.w800,
-                          color: priaryColor,
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AddProductsPage(
+                                      id: widget.id,
+                                    )));
+                      },
+                      child: Container(
+                        child: Center(
+                          child: AppText(
+                            text: 'Add Products',
+                            size: 18,
+                            fw: FontWeight.w800,
+                            color: priaryColor,
+                          ),
                         ),
+                        height: 100,
+                        width: 160,
+                        margin: EdgeInsets.only(right: 10),
+                        decoration: contDecortion,
                       ),
-                      height: 100,
-                      width: 160,
-                      margin: EdgeInsets.only(right: 10),
-                      decoration: contDecortion,
                     ),
                   ),
                   InkWell(
@@ -135,28 +138,30 @@ class _SellerHomePageState extends State<SellerHomePage> {
               ),
               Row(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => AllOrders(
-                                    sellerid: widget.id,
-                                  )));
-                    },
-                    child: Container(
-                      child: Center(
-                        child: AppText(
-                          text: 'All Orders',
-                          size: 18,
-                          fw: FontWeight.w800,
-                          color: priaryColor,
+                  Expanded(
+                    child: InkWell(  
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AllOrders(
+                                      sellerid: widget.id,
+                                    )));
+                      },
+                      child: Container(
+                        child: Center(
+                          child: AppText(
+                            text: 'All Orders',
+                            size: 18,
+                            fw: FontWeight.w800,
+                            color: priaryColor,
+                          ),
                         ),
+                        height: 100,
+                        width: 160,
+                        margin: EdgeInsets.only(right: 10),
+                        decoration: contDecortion,
                       ),
-                      height: 100,
-                      width: 160,
-                      margin: EdgeInsets.only(right: 10),
-                      decoration: contDecortion,
                     ),
                   ),
                   InkWell(
@@ -188,26 +193,28 @@ class _SellerHomePageState extends State<SellerHomePage> {
               ),
               Row(
                 children: [
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => FeedbackPage()));
-                    },
-                    child: Container(
-                      child: Center(
-                        child: AppText(
-                          text: 'View Feedback',
-                          size: 18,
-                          fw: FontWeight.w800,
-                          color: priaryColor,
+                  Expanded(
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => ViewAllFeedbacksSeller(id: widget.id,)));
+                      },
+                      child: Container(
+                        child: Center(
+                          child: AppText(
+                            text: 'View Feedback',
+                            size: 18,
+                            fw: FontWeight.w800,
+                            color: priaryColor,
+                          ),
                         ),
+                        height: 100,
+                        width: 160,
+                        margin: EdgeInsets.only(right: 10),
+                        decoration: contDecortion,
                       ),
-                      height: 100,
-                      width: 160,
-                      margin: EdgeInsets.only(right: 10),
-                      decoration: contDecortion,
                     ),
                   ),
                   InkWell(

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:regalo/admin/viewallsellers.dart';
 import 'package:regalo/admin/viewallusers.dart';
+import 'package:regalo/common/loginpage.dart';
 import 'package:regalo/screens/allcategory.dart';
-import 'package:regalo/screens/seller/feedback.dart';
+
 import 'package:regalo/screens/seller/payments.dart';
 import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/container.dart';
@@ -21,6 +22,19 @@ class _AdminHomePageState extends State<AdminHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+
+
+        actions: [
+          IconButton(
+              onPressed: ()  {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                        (route) => false);
+              },
+              icon: Icon(Icons.logout_sharp))
+
+        ],
         backgroundColor: priaryColor,
       ),
 
@@ -46,13 +60,15 @@ padding: EdgeInsets.all(20),
                   ),
                 ),
                 SizedBox(width: 10,),
-                InkWell(
-                  onTap: (){
+                Expanded(
+                  child: InkWell(
+                    onTap: (){
 
-                    Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllUsers()));
-                  },
-                  child: MyContainer(text: "View All Users",
-                    ht: 100,width: 160,color: priaryColor,
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllUsers()));
+                    },
+                    child: MyContainer(text: "View All Users",
+                      ht: 100, width:160,color: priaryColor,
+                    ),
                   ),
                 ),
               ],
@@ -64,7 +80,7 @@ padding: EdgeInsets.all(20),
                   InkWell(
                     onTap: (){
 
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackPage()));
+                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackPage()));
                     },
                     child: MyContainer(text: "View All Feedback",
                       ht: 100,width: 160,color: priaryColor,
@@ -72,13 +88,15 @@ padding: EdgeInsets.all(20),
                   ),
 
                 SizedBox(width: 10,),
-                InkWell(
-                  onTap: (){
+                Expanded(
+                  child: InkWell(  
+                    onTap: (){
 
-                     Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentDetails()));
-                  },
-                  child: MyContainer(text: "View All Payment",
-                    ht: 100,width: 160,color: priaryColor,
+                       Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentDetails()));
+                    },
+                    child: MyContainer(text: "View All Payment",
+                      ht: 100,width: 160,color: priaryColor,
+                    ),
                   ),
                 ),
               ],

@@ -118,7 +118,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
                           ],
                         ));
                   }).toList(),
-                  onChanged: (newValue) {
+                  onChanged: (String?newValue) {
                     // do other stuff with _category
                     setState(() => _category = newValue);
                   },

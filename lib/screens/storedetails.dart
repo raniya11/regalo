@@ -165,7 +165,7 @@ class _StoreDetailsState extends State<StoreDetails> {
               Container(
                   height: 700,
                   // color: Colors.red,
-                  child: StreamBuilder(
+                  child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
                         .collection('products')
                         .where('sellerid', isEqualTo: widget.id.toString())
