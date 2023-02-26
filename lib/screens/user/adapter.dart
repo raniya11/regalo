@@ -17,14 +17,15 @@ class ShoppingItemAdapter extends TypeAdapter<ShoppingItem> {
         name: fields[0] as String,
         price: fields[1] as double,
         id: fields[2] as String,
-        size: fields[3] as String);
+        size: fields[3] as String,
+        sellerid: fields[4] as String);
   }
 
   @override
   void write(BinaryWriter writer, ShoppingItem obj) {
     print(obj.id);
     writer
-      ..writeByte(4)
+      ..writeByte(5)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
@@ -32,6 +33,8 @@ class ShoppingItemAdapter extends TypeAdapter<ShoppingItem> {
       ..writeByte(2)
       ..write(obj.id)
       ..writeByte(3)
-      ..write(obj.size);
+      ..write(obj.size)
+      ..writeByte(4)
+      ..write(obj.sellerid);
   }
 }

@@ -33,186 +33,191 @@ class _LoginPageState extends State<LoginPage> {
           padding: EdgeInsets.only(left: 25, right: 25, bottom: 30, top: 30),
           child: Form(
             key: _formKey,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                HeaderWidget(),
-                SizedBox(
-                  height: 20,
-                ),
-                AppText(
-                  text: "Hey! Welcome Back",
-                  fw: FontWeight.bold,
-                  size: 20,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value!.isEmpty || value.length <= 4) {
-                      return "Enter a valid username";
-                    }
-                  },
-                  controller: usernameController,
-                  decoration: const InputDecoration(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  HeaderWidget(),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  AppText(
+                    text: "Hey! Welcome Back",
+                    fw: FontWeight.bold,
+                    size: 20,
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.isEmpty || value.length <= 4) {
+                        return "Enter a valid username";
+                      }
+                    },
+                    controller: usernameController,
+                    decoration: const InputDecoration(
+                        enabledBorder: OutlineInputBorder(),
+                        focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(color: Colors.pink, width: 3)),
+                        hintText: "Username"),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  TextFormField(
+                    validator: (value) {
+                      if (value!.length <= 5) {
+                        return "Invalid Password";
+                      }
+                    },
+                    controller: passwordController,
+                    obscureText: showPass,
+                    obscuringCharacter: "*",
+                    decoration: InputDecoration(
                       enabledBorder: OutlineInputBorder(),
                       focusedBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: Colors.pink, width: 3)),
-                      hintText: "Username"),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value!.length <= 5) {
-                      return "Invalid Password";
-                    }
-                  },
-                  controller: passwordController,
-                  obscureText: showPass,
-                  obscuringCharacter: "*",
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(),
-                    focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: Colors.pink, width: 3)),
-                    hintText: "Password",
-                    suffixIcon: IconButton(
-                      onPressed: () {
-                        if (showPass == true) {
-                          setState(() {
-                            showPass = false;
-                          });
-                        } else {
-                          setState(() {
-                            showPass = true;
-                          });
-                        }
-                      },
-                      icon: showPass == true
-                          ? Icon(
-                              Icons.visibility,
-                              color: priaryColor.withOpacity(0.6),
-                            )
-                          : Icon(
-                              Icons.visibility_off,
-                              color: priaryColor,
-                            ),
+                      hintText: "Password",
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          if (showPass == true) {
+                            setState(() {
+                              showPass = false;
+                            });
+                          } else {
+                            setState(() {
+                              showPass = true;
+                            });
+                          }
+                        },
+                        icon: showPass == true
+                            ? Icon(
+                                Icons.visibility,
+                                color: priaryColor.withOpacity(0.6),
+                              )
+                            : Icon(
+                                Icons.visibility_off,
+                                color: priaryColor,
+                              ),
+                      ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Center(
-                  child: InkWell(
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                       if(usernameController.text.trim()=="admin@gmail.com" && passwordController.text.trim()=='12345678'){
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Center(
+                    child: InkWell(
+                      onTap: () {
+                        if (_formKey.currentState!.validate()) {
+                         if(usernameController.text.trim()=="admin@gmail.com" && passwordController.text.trim()=='12345678'){
 
-                         Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminHomePage()));
+                           Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminHomePage()));
 
-                       }
-                       else{
+                         }
+                         else{
 
-                         FirebaseAuth.instance
-                             .signInWithEmailAndPassword(
-                             email: usernameController.text.trim(),
-                             password: passwordController.text)
-                             .then((value) {
-                           FirebaseFirestore.instance
-                               .collection('users')
-                               .doc(value.user!.uid)
-                               .get().then((value) {
+                           FirebaseAuth.instance
+                               .signInWithEmailAndPassword(
+                               email: usernameController.text.trim(),
+                               password: passwordController.text)
+                               .then((value) {
+                             FirebaseFirestore.instance
+                                 .collection('users')
+                                 .doc(value.user!.uid)
+                                 .get().then((value) {
 
-                             if(value.data()!['usertype']=="user" ){
+                               if(value.data()!['usertype']=="user" ){
 
-
-                               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>UserHomePage(
-
-
-                                 name: value.data()!['name'],
-                                 email:  value.data()!['email'],
-                                 id:  value.data()!['uid'],
-                                 status:  value.data()!['status'],
-                               )), (route) => false);
-
-                             }
-
-                             else if(value.data()!['usertype']=="seller"){
-
-                               //print(value.data()!['usertype'].toString());
-                               Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SellerHomePage(
+                                 print(value.data()!['usertype']);
+                                 print(value.data()!['name']);
 
 
-                                 name: value.data()!['name'],
-                                 email:  value.data()!['email'],
-                                 address: value.data()!['address'],
-                                 pincode: value.data()!['pincode'],
-                                 phone: value.data()!['phone'],
-                                 id:  value.data()!['uid'],
-                                 status:  value.data()!['status'],
-                               )), (route) => false);
+                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>UserHomePage(
+
+
+                                   name: value.data()!['name'],
+                                   email:  value.data()!['email'],
+                                   id:  value.data()!['uid'],
+                                   status:  value.data()!['status'],
+                                 )), (route) => false);
+
+                               }
+
+                               else if(value.data()!['usertype']=="seller"){
+
+                                 //print(value.data()!['usertype'].toString());
+                                 Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SellerHomePage(
+
+
+                                   name: value.data()!['name'],
+                                   email:  value.data()!['email'],
+                                   address: value.data()!['address'],
+                                   pincode: value.data()!['pincode'],
+                                   phone: value.data()!['phone'],
+                                   id:  value.data()!['uid'],
+                                   status:  value.data()!['status'],
+                                 )), (route) => false);
 
 
 
-                             }
+                               }
+                             });
+
+
+
+
                            });
-
-
-
-
-                         });
-                       }
-                      }
-                    },
-                    child: Container(
-                      height: 45,
-                      width: 250,
-                      decoration: BoxDecoration(
-                        color: Colors.pink,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: Center(
-                        child: AppText(
-                          text: "Login",
-                          size: 16,
-                          color: Colors.white,
-                          fw: FontWeight.w700,
+                         }
+                        }
+                      },
+                      child: Container(
+                        height: 45,
+                        width: 250,
+                        decoration: BoxDecoration(
+                          color: Colors.pink,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: AppText(
+                            text: "Login",
+                            size: 16,
+                            color: Colors.white,
+                            fw: FontWeight.w700,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                SizedBox(
-                  height: 30,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    AppText(text: "Don't have an account"),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterPage()));
-                        },
-                        child: AppText(
-                          text: "Register",
-                          size: 16,
-                          color: Colors.pink,
-                          fw: FontWeight.w700,
-                        ))
-                  ],
-                )
-              ],
+                  SizedBox(
+                    height: 30,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      AppText(text: "Don't have an account"),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      InkWell(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterPage()));
+                          },
+                          child: AppText(
+                            text: "Register",
+                            size: 16,
+                            color: Colors.pink,
+                            fw: FontWeight.w700,
+                          ))
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),

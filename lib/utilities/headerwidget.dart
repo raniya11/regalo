@@ -7,9 +7,12 @@ class HeaderWidget extends StatelessWidget {
     return Container(
         child: Row(
           children: [
-            Image.asset(
-              'assets/images/logonew.png',
-              scale: 3,
+            Container(
+              width: 50,
+              child: Image.asset(
+                'assets/images/logonew.png',
+                scale: 6,
+              ),
             ),
             Container(
               child: RichText(

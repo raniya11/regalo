@@ -5,6 +5,8 @@ import 'package:regalo/constants/decorations.dart';
 import 'package:regalo/screens/allcategory.dart';
 import 'package:regalo/screens/allstores.dart';
 import 'package:regalo/screens/storedetails.dart';
+import 'package:regalo/screens/user/addfeedback.dart';
+import 'package:regalo/screens/user/userfeedbackview.dart';
 import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
@@ -37,7 +39,37 @@ class _UserHomePageState extends State<UserHomePage> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
-      drawer: Drawer(),
+      drawer: Drawer(
+        child: ListView(
+          children: [
+
+            DrawerHeader(child: Row(children: [
+
+              CircleAvatar(
+                child: Center(
+                  child: Text(widget.name![0].toUpperCase()),
+                ),
+                
+              ),SizedBox(width: 20,),
+              AppText(text: widget.name)
+            ],)),
+            ListTile(
+              onTap: (){
+
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>AddFeedBack(id: widget.id,email: widget.email,name: widget.name,)));
+              },
+              title: Text("Add Feedback"),
+            ),
+            ListTile(
+              onTap: (){
+
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllFeedbacksUser(id: widget.id,)));
+              },
+              title: Text("View Feedback"),
+            )
+          ],
+        ),
+      ),
       appBar: AppBar(
         backgroundColor: priaryColor,
         //centerTitle: true,
@@ -65,9 +97,11 @@ class _UserHomePageState extends State<UserHomePage> {
                     SizedBox(
                       width: 14,
                     ),
-                    AppText(
-                      text: "WELCOME ${widget.name}",
-                      size: 17,
+                    Expanded(
+                      child: AppText(
+                        text: "WELCOME ${widget.name}",
+                        size: 17,
+                      ),
                     )
                   ],
                 ),

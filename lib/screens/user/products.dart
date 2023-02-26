@@ -355,7 +355,11 @@ class _ProductsPageState extends State<ProductsPage> {
                                   name: widget.name,
                                   price: double.parse(widget.price.toString()),
                                   id: widget.productid,
-                                  size: selecteditem!.toString()),
+                                  size: selecteditem!.toString(),
+                                sellerid: widget.sellerid
+
+                              ),
+
                             );
                             updateItemCount();
                             ScaffoldMessenger.of(context).showSnackBar(
