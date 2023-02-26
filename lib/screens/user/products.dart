@@ -200,8 +200,11 @@ class _ProductsPageState extends State<ProductsPage> {
                       ),
                       Container(
                           padding: EdgeInsets.only(top: 10, bottom: 10),
-                          height: 150,
+                          //height: 100,
                           child: Text(widget.description.toString())),
+                      SizedBox(
+                        height: 10,
+                      ),
                       AppText(
                         text: 'Sizes',
                         size: 20,
