@@ -2,10 +2,11 @@ class ShoppingItem {
   final String? name;
   final double? price;
 
-  String? size;
 
-  final String? id;
-  final String? sellerid;
+
+   String? id;
+  String? size;
+  String? sellerid;
 
   ShoppingItem({this.name, this.price, this.id, this.size, this.sellerid});
 }

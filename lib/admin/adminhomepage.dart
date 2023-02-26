@@ -92,7 +92,7 @@ padding: EdgeInsets.all(20),
                   child: InkWell(  
                     onTap: (){
 
-                       Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentDetails()));
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentDetails()));
                     },
                     child: MyContainer(text: "View All Payment",
                       ht: 100,width: 160,color: priaryColor,

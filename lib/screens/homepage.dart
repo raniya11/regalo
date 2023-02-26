@@ -1,4 +1,6 @@
+import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:regalo/common/loginpage.dart';
 import 'package:regalo/constants/colors.dart';
 import 'package:regalo/constants/decorations.dart';
@@ -6,7 +8,9 @@ import 'package:regalo/screens/allcategory.dart';
 import 'package:regalo/screens/allstores.dart';
 import 'package:regalo/screens/storedetails.dart';
 import 'package:regalo/screens/user/addfeedback.dart';
+import 'package:regalo/screens/user/shoppingitem.dart';
 import 'package:regalo/screens/user/userfeedbackview.dart';
+import 'package:regalo/screens/user/viewcartpage.dart';
 import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
@@ -34,6 +38,52 @@ class _UserHomePageState extends State<UserHomePage> {
   List<Map<String, dynamic>> scrapBook = [
     {"id": 1, "title": "Scrapbook1", 'desc': "Sample Desc"}
   ];
+
+  var shoppingCart;
+
+  Future<Box<ShoppingItem>> _openShoppingCartBox() async {
+    var shoppingCartBox = await Hive.openBox<ShoppingItem>('shopping_cart');
+    return shoppingCartBox;
+  }
+
+  void addToCart(ShoppingItem item) {
+    bool itemExists = false;
+    int? itemIndex;
+    for (int i = 0; i < shoppingCart.length; i++) {
+      ShoppingItem currentItem = shoppingCart.getAt(i);
+      if (currentItem.name == item.name) {
+        itemExists = true;
+        itemIndex = i;
+        break;
+      }
+    }
+    if (itemExists) {
+      shoppingCart.putAt(itemIndex, item);
+    } else {
+      shoppingCart.add(item);
+    }
+  }
+
+  void removeFromCart(int index) {
+    shoppingCart.deleteAt(index);
+  }
+
+  List<ShoppingItem> getCartItems() {
+    return shoppingCart.values.toList();
+  }
+
+  List<String>? _items;
+
+  int itemCount = 0;
+
+  void updateItemCount() async {
+    var shoppingCartBox = await Hive.openBox<ShoppingItem>('shopping_cart');
+    setState(() {
+      itemCount = Hive.box<ShoppingItem>('shopping_cart').length;
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -74,6 +124,36 @@ class _UserHomePageState extends State<UserHomePage> {
         backgroundColor: priaryColor,
         //centerTitle: true,
         actions: [
+
+          IconButton(
+            icon: SizedBox(),
+            onPressed: () {},
+          ),
+          Container(
+            margin: EdgeInsets.only(right: 5,top: 5),
+            child: Badge(
+              badgeColor: Colors.blue,
+              badgeContent: Text(
+                itemCount.toString(),
+                style: TextStyle(color: Colors.white),
+              ),
+              child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => ShoppingCartScreen(
+                          cname: widget.name,
+                          cemail: widget.email,
+                          cid: widget.id,
+
+                        ),
+                      ),
+                    );
+                  },
+                  child: Icon(Icons.shopping_cart)),
+            ),
+          ),
           IconButton(
               onPressed: () {
                 Navigator.push(context,

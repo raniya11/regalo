@@ -10,7 +10,8 @@ import 'package:regalo/utilities/headerwidget.dart';
 
 
 class ProductDetailsPage extends StatefulWidget {
-  const ProductDetailsPage({Key? key}) : super(key: key);
+  String?id;
+ ProductDetailsPage({Key? key,this.id}) : super(key: key);
 
   @override
   State<ProductDetailsPage> createState() => _ProductDetailsPageState();
@@ -50,7 +51,7 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
                 height: 700,
                 // color: Colors.red,
                 child: StreamBuilder<QuerySnapshot>(
-                  stream: FirebaseFirestore.instance.collection('products').snapshots(),
+                  stream: FirebaseFirestore.instance.collection('products').where('sellerid',isEqualTo:widget.id ).snapshots(),
 
                   builder: (context,snapshot){
 

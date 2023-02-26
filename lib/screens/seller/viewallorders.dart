@@ -9,15 +9,15 @@ import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
 
-class ViewPayments extends StatefulWidget {
+class ViewAllOrders extends StatefulWidget {
   String?id;
-  ViewPayments({Key? key,this.id}) : super(key: key);
+  ViewAllOrders({Key? key,this.id}) : super(key: key);
 
   @override
-  State<ViewPayments> createState() => _ViewPaymentsState();
+  State<ViewAllOrders> createState() => _ViewAllOrdersState();
 }
 
-class _ViewPaymentsState extends State<ViewPayments> {
+class _ViewAllOrdersState extends State<ViewAllOrders> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -65,19 +65,19 @@ class _ViewPaymentsState extends State<ViewPayments> {
 
                               return Card(
                                 elevation: 5.0,
-                                child: Container(
+                                child: Container( 
                                   padding: EdgeInsets.all(20),
 
                                   width: MediaQuery.of(context).size.width,
-
+                                  
                                   child: Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-
+                                      
                                       Row(
                                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                         children: [
-                                          AppText(text: "Payment Details",size: 16,fw: FontWeight.bold,),
+                                          AppText(text: "Order Details",size: 16,fw: FontWeight.bold,),
                                           snapshot.data!.docs[index]['paymentstatus']==1?AppText(text: "Confirmed",size: 16,fw: FontWeight.bold,color: Colors.green,):SizedBox(),
                                         ],
                                       ),
@@ -91,15 +91,15 @@ class _ViewPaymentsState extends State<ViewPayments> {
                                       SizedBox(height: 10,),
                                       Row(
                                         children: [
-                                          AppText(text: 'Amount Recived',fw: FontWeight.bold,size: 14,),
-                                          AppText(text: ' ${snapshot.data!.docs[index]['price']}'),
+                                          AppText(text: 'size',fw: FontWeight.bold,size: 14,),
+                                          AppText(text: ' ${snapshot.data!.docs[index]['size']}'),
                                         ],
                                       ),
                                       SizedBox(height: 10,),
                                       Row(
                                         children: [
-                                          AppText(text: 'Customer Details',fw: FontWeight.bold,size: 14,),
-                                          AppText(text: ' ${snapshot.data!.docs[index]['customername']}   ${snapshot.data!.docs[index]['customeremail']}'),
+                                          AppText(text: 'Delivery Address',fw: FontWeight.bold,size: 14,),
+                                          AppText(text: ' ${snapshot.data!.docs[index]['deladdress1']}   ${snapshot.data!.docs[index]['deladdress2']}'),
                                         ],
                                       ),
 
@@ -108,10 +108,10 @@ class _ViewPaymentsState extends State<ViewPayments> {
                                   ),
                                 ),
                               );
-
-
-
-                              Card(
+                                
+                                
+                                
+                                Card(
                                 child: ListTile(
 
                                   title: Text(snapshot.data!.docs[index]['itemname']),

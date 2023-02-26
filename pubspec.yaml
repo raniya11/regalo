@@ -47,6 +47,7 @@ dependencies:
   hive:
   shared_preferences:
   hive_flutter:
+  flutter_credit_card: ^3.0.5
 
 dev_dependencies:
   flutter_test:

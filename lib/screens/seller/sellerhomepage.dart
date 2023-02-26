@@ -4,12 +4,13 @@ import 'package:regalo/common/loginpage.dart';
 import 'package:regalo/constants/colors.dart';
 import 'package:regalo/constants/decorations.dart';
 import 'package:regalo/screens/seller/addproducts.dart';
-import 'package:regalo/screens/seller/allorders.dart';
+
 import 'package:regalo/screens/seller/complaints.dart';
 
 import 'package:regalo/screens/seller/feedbackviewselelr.dart';
 import 'package:regalo/screens/seller/payments.dart';
 import 'package:regalo/screens/seller/productdetails.dart';
+import 'package:regalo/screens/seller/viewallorders.dart';
 import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
@@ -42,7 +43,7 @@ class _SellerHomePageState extends State<SellerHomePage> {
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
-      drawer: Drawer(),
+      //drawer: Drawer(),
       appBar: AppBar(
         backgroundColor: priaryColor,
         //centerTitle: true,
@@ -114,7 +115,7 @@ class _SellerHomePageState extends State<SellerHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProductDetailsPage()));
+                              builder: (context) => ProductDetailsPage(id: widget.id,)));
                     },
                     child: Container(
                       child: Center(
@@ -144,8 +145,8 @@ class _SellerHomePageState extends State<SellerHomePage> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => AllOrders(
-                                      sellerid: widget.id,
+                                builder: (context) => ViewAllOrders(
+                                      id: widget.id,
                                     )));
                       },
                       child: Container(
@@ -169,7 +170,9 @@ class _SellerHomePageState extends State<SellerHomePage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PaymentDetails()));
+                              builder: (context) => ViewPayments(
+                                id: widget.id,
+                              )));
                     },
                     child: Container(
                       child: Center(
@@ -217,28 +220,28 @@ class _SellerHomePageState extends State<SellerHomePage> {
                       ),
                     ),
                   ),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => ComplaintsPage()));
-                    },
-                    child: Container(
-                      child: Center(
-                        child: AppText(
-                          text: 'View Complaints',
-                          size: 18,
-                          fw: FontWeight.w800,
-                          color: priaryColor,
-                        ),
-                      ),
-                      height: 100,
-                      width: 160,
-                      margin: EdgeInsets.only(right: 10),
-                      decoration: contDecortion,
-                    ),
-                  ),
+                  // InkWell(
+                  //   onTap: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => ComplaintsPage()));
+                  //   },
+                  //   child: Container(
+                  //     child: Center(
+                  //       child: AppText(
+                  //         text: 'View Complaints',
+                  //         size: 18,
+                  //         fw: FontWeight.w800,
+                  //         color: priaryColor,
+                  //       ),
+                  //     ),
+                  //     height: 100,
+                  //     width: 160,
+                  //     margin: EdgeInsets.only(right: 10),
+                  //     decoration: contDecortion,
+                  //   ),
+                  // ),
                 ],
               ),
             ],

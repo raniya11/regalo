@@ -10,7 +10,7 @@ import 'package:regalo/screens/storedetails.dart';
 import 'package:regalo/screens/user/adapter.dart';
 import 'package:regalo/screens/user/userregisteration.dart';
 import 'common/splashpage.dart';
-import 'package:regalo/screens/seller/allorders.dart';
+
 import 'package:regalo/screens/seller/orderdetails.dart';
 import 'package:regalo/screens/seller/addproducts.dart';
 

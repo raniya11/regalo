@@ -134,7 +134,12 @@ class _ProductsPageState extends State<ProductsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => ShoppingCartScreen(),
+                        builder: (context) => ShoppingCartScreen(
+                          cname: widget.cname,
+                          cemail: widget.cemail,
+                          cid: widget.cid,
+
+                        ),
                       ),
                     );
                   },
@@ -344,8 +349,9 @@ class _ProductsPageState extends State<ProductsPage> {
 
                       Center(
                         child: InkWell(
-                          onTap: () async {
 
+                          onTap: () async {
+                            print(widget.sellerid);
                             print(selecteditem);
                             var shoppingCartBox =
                                 await Hive.openBox<ShoppingItem>(
@@ -355,7 +361,7 @@ class _ProductsPageState extends State<ProductsPage> {
                                   name: widget.name,
                                   price: double.parse(widget.price.toString()),
                                   id: widget.productid,
-                                  size: selecteditem!.toString(),
+                                  size: selecteditem.toString(),
                                 sellerid: widget.sellerid
 
                               ),
