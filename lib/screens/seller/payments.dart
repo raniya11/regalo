@@ -38,7 +38,7 @@ class _ViewPaymentsState extends State<ViewPayments> {
             children: [
 
               AppText(
-                text: "View All Orders",
+                text: "View All Payments",
                 size: 18,
                 fw: FontWeight.w800,
                 color: priaryColor,

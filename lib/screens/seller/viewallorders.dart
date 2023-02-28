@@ -98,6 +98,13 @@ class _ViewAllOrdersState extends State<ViewAllOrders> {
                                       SizedBox(height: 10,),
                                       Row(
                                         children: [
+                                          AppText(text: 'price',fw: FontWeight.bold,size: 14,),
+                                          AppText(text: ' ${snapshot.data!.docs[index]['price']}'),
+                                        ],
+                                      ),
+                                      SizedBox(height: 10,),
+                                      Row(
+                                        children: [
                                           AppText(text: 'Delivery Address',fw: FontWeight.bold,size: 14,),
                                           AppText(text: ' ${snapshot.data!.docs[index]['deladdress1']}   ${snapshot.data!.docs[index]['deladdress2']}'),
                                         ],
