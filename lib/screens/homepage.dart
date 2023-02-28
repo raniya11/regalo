@@ -1,4 +1,5 @@
 import 'package:badges/badges.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/adapters.dart';
 import 'package:regalo/common/loginpage.dart';
@@ -15,12 +16,12 @@ import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
 class UserHomePage extends StatefulWidget {
-
-  String ?name;
-  String?email;
+  String? name;
+  String? email;
   String? id;
-  int?status;
-UserHomePage({Key? key,this.email,this.id,this.name,this.status}) : super(key: key);
+  int? status;
+  UserHomePage({Key? key, this.email, this.id, this.name, this.status})
+      : super(key: key);
 
   @override
   State<UserHomePage> createState() => _UserHomePageState();
@@ -83,39 +84,76 @@ class _UserHomePageState extends State<UserHomePage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       drawer: Drawer(
+        backgroundColor: priaryColor,
         child: ListView(
           children: [
-
-            DrawerHeader(child: Row(children: [
-
-              CircleAvatar(
-                child: Center(
-                  child: Text(widget.name![0].toUpperCase()),
-                ),
-                
-              ),SizedBox(width: 20,),
-              AppText(text: widget.name)
-            ],)),
+            DrawerHeader(
+                decoration: BoxDecoration(color: priaryColor),
+                child: Row(
+                  children: [
+                    CircleAvatar(
+                      child: Center(
+                        child: AppText(
+                          text: widget.name![0].toUpperCase(),
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 20,
+                    ),
+                    AppText(
+                      text: widget.name,
+                      color: Colors.white,
+                    )
+                  ],
+                )),
             ListTile(
-              onTap: (){
-
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>AddFeedBack(id: widget.id,email: widget.email,name: widget.name,)));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AddFeedBack(
+                              id: widget.id,
+                              email: widget.email,
+                              name: widget.name,
+                            )));
               },
-              title: Text("Add Feedback"),
+              title: AppText(
+                text: "Add Feedback",
+                color: Colors.white,
+              ),
             ),
             ListTile(
-              onTap: (){
-
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllFeedbacksUser(id: widget.id,)));
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ViewAllFeedbacksUser(
+                              id: widget.id,
+                            )));
               },
-              title: Text("View Feedback"),
+              title: AppText(
+                text: "View Feedback",
+                color: Colors.white,
+              ),
+            ),
+            ListTile(
+              onTap: () {
+                Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false);
+              },
+              title: AppText(
+                text: "Logout",
+                color: Colors.white,
+              ),
             )
           ],
         ),
@@ -124,42 +162,33 @@ class _UserHomePageState extends State<UserHomePage> {
         backgroundColor: priaryColor,
         //centerTitle: true,
         actions: [
-
-          IconButton(
-            icon: SizedBox(),
-            onPressed: () {},
-          ),
-          Container(
-            margin: EdgeInsets.only(right: 5,top: 5),
-            child: Badge(
-              badgeColor: Colors.blue,
-              badgeContent: Text(
-                itemCount.toString(),
-                style: TextStyle(color: Colors.white),
-              ),
-              child: InkWell(
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => ShoppingCartScreen(
-                          cname: widget.name,
-                          cemail: widget.email,
-                          cid: widget.id,
-
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+              margin: EdgeInsets.only(right: 5, top: 5),
+              child: Badge(
+                badgeColor: Colors.blue,
+                badgeContent: Text(
+                  itemCount.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => ShoppingCartScreen(
+                            cname: widget.name,
+                            cemail: widget.email,
+                            cid: widget.id,
+                          ),
                         ),
-                      ),
-                    );
-                  },
-                  child: Icon(Icons.shopping_cart)),
+                      );
+                    },
+                    child: Icon(Icons.shopping_cart)),
+              ),
             ),
           ),
-          IconButton(
-              onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => LoginPage()));
-              },
-              icon: Icon(Icons.login))
         ],
       ),
       body: Container(
@@ -190,7 +219,7 @@ class _UserHomePageState extends State<UserHomePage> {
                 height: 20,
               ),
               AppText(
-                text: "Recently Viewed",
+                text: "Latest Offers",
                 size: 18,
                 fw: FontWeight.w800,
                 color: priaryColor,
@@ -199,18 +228,64 @@ class _UserHomePageState extends State<UserHomePage> {
                 height: 10,
               ),
               Container(
-                  height: 150,
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: 5,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          margin: EdgeInsets.only(right: 10),
-                          height: 150,
-                          width: size.width * 0.75,
-                          decoration: contDecortion,
-                        );
-                      })),
+                height: 100,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream:
+                      FirebaseFirestore.instance.collection('ads').snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              height: 100,
+                              width: size.width * 0.85,
+                              decoration: contDecortion,
+                              child: Stack(
+                                children: [
+                                  Container(
+                                    height: 150,
+                                    width: 120,
+                                    decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        image: DecorationImage(
+                                            fit: BoxFit.fill,
+                                            image: NetworkImage(snapshot
+                                                .data!.docs[index]['imgurl']))),
+                                  ),
+                                  Align(
+                                      alignment: Alignment(0.9, -0.6),
+                                      child: Container(
+                                          width: 150,
+                                          child: AppText(
+                                            text: snapshot.data!.docs[index]
+                                                ['title'],
+                                            size: 17,
+                                            fw: FontWeight.w700,
+                                          ))),
+                                  Align(
+                                      alignment: Alignment(0.9, -0.2),
+                                      child: Container(
+                                          width: 150,
+                                          child: AppText(
+                                            text: snapshot.data!.docs[index]
+                                                ['description'],
+                                          ))),
+                                ],
+                              ),
+                            );
+                          });
+                    }
+                    if (snapshot!.hasData && snapshot.data!.docs.length == 0) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
+                ),
+              ),
               SizedBox(
                 height: 20,
               ),
@@ -229,38 +304,88 @@ class _UserHomePageState extends State<UserHomePage> {
                       scrollDirection: Axis.horizontal,
                       itemCount: category.length,
                       itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ViewAllCategory(
-                                        title: category[index])));
-                          },
-                          child: Container(
-                            margin: EdgeInsets.only(right: 10),
-                            height: 100,
-                            width: size.width * 0.50,
-                            decoration: BoxDecoration(
-                                color: contColor,
-                                borderRadius: BorderRadius.circular(15),
-                                image: DecorationImage(
-                                    scale: 4,
-                                    image: AssetImage(
-
-                                        'assets/images/'+category_img[index].toString()),fit: BoxFit.cover
-                            )),
-
-                            child:
-                                AppText(text: category[index],color: priaryColor,),
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ViewAllCategory(
+                                          title: category[index])));
+                            },
+                            child: Column(
+                              children: [
+                                Container(
+                                  height: 100,
+                                  width: size.width * 0.50,
+                                  decoration: BoxDecoration(
+                                      color: contColor,
+                                      // borderRadius: BorderRadius.circular(15),
+                                      image: DecorationImage(
+                                          scale: 4,
+                                          image: AssetImage('assets/images/' +
+                                              category_img[index].toString()),
+                                          fit: BoxFit.cover)),
+                                ),
+                                Container(
+                                  height: 30,
+                                  width: size.width * 0.50,
+                                  color: priaryColor,
+                                  child: Center(
+                                      child: AppText(
+                                    text: category[index],
+                                    color: Colors.white,
+                                  )),
+                                )
+                              ],
+                            ),
                           ),
                         );
                       })),
               SizedBox(
                 height: 20,
               ),
+              Center(
+                child: AppText(
+                  text: "Visit Store",
+                  size: 18,
+                  fw: FontWeight.w800,
+                  color: priaryColor,
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => ViewAllStoreCategory(
+                                cemail: widget.email,
+                                cid: widget.id,
+                                cname: widget.name,
+                              )));
+                },
+                child: Center(
+                  child: Container(
+                      height: 80,
+                      width: 80,
+                      decoration: BoxDecoration(
+                          color: priaryColor, shape: BoxShape.circle),
+                      child: Center(
+                          child: Icon(
+                        Icons.arrow_forward,
+                        color: Colors.white,
+                      ))),
+                ),
+              ),
+              SizedBox(
+                height: 10,
+              ),
               AppText(
-                text: "Visit Store",
+                text: "Your Recent Orders",
                 size: 18,
                 fw: FontWeight.w800,
                 color: priaryColor,
@@ -269,26 +394,79 @@ class _UserHomePageState extends State<UserHomePage> {
                 height: 10,
               ),
               Container(
-                color: contColor,
-                  height: 150,
-                  child:
+                height: 100,
+                child: StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection('orders')
+                      .where('customerid', isEqualTo: widget.id)
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return ListView.builder(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: snapshot.data!.docs.length,
+                          itemBuilder: (context, index) {
+                            return Card(
+                              child: Container(
+                                margin: EdgeInsets.only(right: 10),
+                                height: 100,
+                                width: size.width * 0.65,
+                             
+                                child: Stack(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment(-0.9, 0.0),
+                                      child: Container(
 
-              InkWell(
-                onTap: (){
+                                        decoration: BoxDecoration(
 
+                                        ),
+                                        child: CircleAvatar(
+                                          child: Text((index + 1).toString()),
+                                        ),
+                                      ),
+                                    ),
+                                    Align(
+                                        alignment: Alignment(0.9, -0.5),
+                                        child: Container(
+                                            width: 150,
+                                            child: AppText(
+                                              text: snapshot.data!.docs[index]
+                                                  ['itemname'],
+                                              size: 17,
+                                              fw: FontWeight.w700,
+                                            ))),
+                                    Align(
+                                        alignment: Alignment(0.9, 0.0),
+                                        child: Container(
+                                            width: 150,
+                                            child: AppText(
+                                              text: snapshot.data!.docs[index]
+                                                  ['price'].toString(),
+                                            ))),
+                                    Align(
+                                        alignment: Alignment(0.9, 0.5),
+                                        child: Container(
 
-                  Navigator.push(context, MaterialPageRoute(builder: (context)=> ViewAllStoreCategory(
-                    cemail: widget.email,
-                      cid: widget.id,
-                    cname: widget.name,
-
-
-                  )));
-                },
-                child: Center(
-                  child:AppText(text: "Stores",size: 20,color: priaryColor,),
+                                            width: 150,
+                                            child:snapshot.data!.docs[index]
+                              ['paymentstatus']==1? AppText(
+                                              text: "Paid",color: Colors.green,
+                                            ):AppText(text: "Pending"),),),
+                                  ],
+                                ),
+                              ),
+                            );
+                          });
+                    }
+                    if (snapshot!.hasData && snapshot.data!.docs.length == 0) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    return CircularProgressIndicator();
+                  },
                 ),
-              )
               ),
             ],
           ),

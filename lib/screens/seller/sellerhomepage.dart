@@ -4,6 +4,8 @@ import 'package:regalo/common/loginpage.dart';
 import 'package:regalo/constants/colors.dart';
 import 'package:regalo/constants/decorations.dart';
 import 'package:regalo/screens/seller/addproducts.dart';
+import 'package:regalo/screens/seller/bannermanagement/createbanneradd.dart';
+import 'package:regalo/screens/seller/bannermanagement/viewalladsadmin.dart';
 
 import 'package:regalo/screens/seller/complaints.dart';
 
@@ -244,10 +246,68 @@ class _SellerHomePageState extends State<SellerHomePage> {
                   // ),
                 ],
               ),
+      SizedBox(
+        height: 10,
+      ),
+      Row(
+        children: [
+          Expanded(
+            child: InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => CreateBannerAdd(
+                          id: widget.id,
+                          name: widget.name,
+                        )));
+              },
+              child: Container(
+                child: Center(
+                  child: AppText(
+                    text: 'Create Ads',
+                    size: 18,
+                    fw: FontWeight.w800,
+                    color: priaryColor,
+                  ),
+                ),
+                height: 100,
+                width: 160,
+                margin: EdgeInsets.only(right: 10),
+                decoration: contDecortion,
+              ),
+            ),
+          ),
+          InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) =>ViewAllAddsAdmin(
+                        id: widget.id,
+                      )));
+            },
+            child: Container(
+              child: Center(
+                child: AppText(
+                  text: 'View All Ad',
+                  size: 18,
+                  fw: FontWeight.w800,
+                  color: priaryColor,
+                ),
+              ),
+              height: 100,
+              width: 160,
+              margin: EdgeInsets.only(right: 10),
+              decoration: contDecortion,
+            ),
+          ),
             ],
           ),
+      ]
         ),
       ),
+      )
     );
   }
 }
