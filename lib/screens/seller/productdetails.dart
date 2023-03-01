@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:regalo/common/loginpage.dart';
 import 'package:regalo/constants/colors.dart';
 import 'package:regalo/constants/decorations.dart';
+import 'package:regalo/screens/seller/editproduct.dart';
 import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
@@ -65,6 +66,9 @@ class _ProductDetailsPageState extends State<ProductDetailsPage> {
 
                             return Card(
                               child: ListTile(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(builder: (context)=>EditProduct(item: snapshot.data!.docs[index],)));
+                                },
                                 leading: Container(
                                   child: Image.network(snapshot.data!.docs[index]['productImage'].toString()),
                                 ),
