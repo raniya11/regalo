@@ -9,6 +9,7 @@ import 'package:regalo/screens/allcategory.dart';
 import 'package:regalo/screens/allstores.dart';
 import 'package:regalo/screens/storedetails.dart';
 import 'package:regalo/screens/user/addfeedback.dart';
+import 'package:regalo/screens/user/searchpage.dart';
 import 'package:regalo/screens/user/shoppingitem.dart';
 import 'package:regalo/screens/user/userfeedbackview.dart';
 import 'package:regalo/screens/user/viewcartpage.dart';
@@ -218,6 +219,34 @@ class _UserHomePageState extends State<UserHomePage> {
               SizedBox(
                 height: 20,
               ),
+              InkWell(onTap: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>SearchPage(
+                  cname: widget.name,
+
+                  cemail: widget.email,
+                  cid: widget.id
+
+                  ,) ));            },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  width: MediaQuery.of(context).size.width,
+                  height: 40,
+
+                  decoration: BoxDecoration(   color: Colors.black12,
+                    borderRadius: BorderRadius.circular(10)
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      AppText(text: "Search Products"),
+                      Icon(Icons.search)
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
               AppText(
                 text: "Latest Offers",
                 size: 18,
@@ -411,7 +440,7 @@ class _UserHomePageState extends State<UserHomePage> {
                                 margin: EdgeInsets.only(right: 10),
                                 height: 100,
                                 width: size.width * 0.65,
-                             
+
                                 child: Stack(
                                   children: [
                                     Align(
