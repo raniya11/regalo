@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:regalo/constants/colors.dart';
 import 'package:regalo/constants/decorations.dart';
+import 'package:regalo/screens/user/products.dart';
 import 'package:regalo/utilities/apptext.dart';
 import 'package:regalo/utilities/headerwidget.dart';
 
@@ -11,8 +12,13 @@ class ViewAllCategory extends StatefulWidget {
   String?title;
   String?id;
   bool? fromstore;
+  String?cname;
+  String?cid;
+  String?cemail;
 
-  ViewAllCategory({Key? key,this.title,this.id,this.fromstore=false}) : super(key: key);
+  ViewAllCategory({Key? key,this.title,this.id,this.fromstore=false, this.cemail,
+    this.cid,
+    this.cname}) : super(key: key);
 
   @override
   State<ViewAllCategory> createState() => _ViewAllCategoryState();
@@ -69,6 +75,35 @@ class _ViewAllCategoryState extends State<ViewAllCategory> {
 
                             return Card(
                               child: ListTile(
+                                onTap: (){
+
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => ProductsPage(
+                                        cname: widget.cname,
+                                        cemail: widget.cemail,
+                                        cid: widget.cid,
+                                        item:snapshot.data!.docs[index]
+                                        ['size'],
+                                        price: snapshot.data!.docs[index]
+                                        ['price'],
+                                        name: snapshot.data!.docs[index]
+                                        ['productName'],
+                                        imgurl: snapshot.data!.docs[index]
+                                        ['productImage'],
+                                        offers: snapshot.data!.docs[index]
+                                        ['offer'],
+                                        description: snapshot.data!.docs[index]
+                                        ['description'],
+                                        sellerid: snapshot.data!.docs[index]
+                                        ['sellerid'],
+                                        productid: snapshot.data!.docs[index]
+                                        ['productId'],
+                                      ),
+                                    ),
+                                  );
+                                },
                                 leading: Container(
                                   child: Image.network(snapshot.data!.docs[index]['productImage'].toString()),
                                 ),
@@ -77,6 +112,7 @@ class _ViewAllCategoryState extends State<ViewAllCategory> {
                                 trailing: Icon(Icons.forward,color: priaryColor,),
                               ),
                             );
+
                           });
                     }
 

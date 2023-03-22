@@ -268,6 +268,7 @@ class _UserHomePageState extends State<UserHomePage> {
                           itemCount: snapshot.data!.docs.length,
                           itemBuilder: (context, index) {
                             return Container(
+                              margin: EdgeInsets.only(right: 10),
                               height: 100,
                               width: size.width * 0.85,
                               decoration: contDecortion,
@@ -341,6 +342,10 @@ class _UserHomePageState extends State<UserHomePage> {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => ViewAllCategory(
+
+                                        cname: widget.name,
+                                          cemail: widget.email,
+                                          cid: widget.id,
                                           title: category[index])));
                             },
                             child: Column(

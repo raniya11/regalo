@@ -27,6 +27,7 @@ class _EditProductState extends State<EditProduct> {
   XFile? _image; // For accept Null:-?
 
   var imageurl;
+  var _imageurl;
 
   String? _category;
   List<String> categories = ["Scrapbooks", "Frames", "Hamper", "Bouquet"];
@@ -225,7 +226,7 @@ QueryDocumentSnapshot? _item;
                     onTap: () {
                       if (formkey.currentState!.validate()) {
                         if (_category != null) {
-                          if(imageurl==null || _image!.path!=null){
+                          if(imageurl==null ){
 
                             String fileName = DateTime.now().toString();
                             var ref = FirebaseStorage.instance
@@ -235,7 +236,8 @@ QueryDocumentSnapshot? _item;
                             ref.putFile(File(_image!.path));
 
                             uploadTask.then((res) async {
-                              imageurl = (await ref.getDownloadURL()).toString();
+
+                              _imageurl = (await ref.getDownloadURL()).toString();
                             }).then((value) {
                               FirebaseFirestore.instance
                                   .collection('products')
@@ -250,7 +252,7 @@ QueryDocumentSnapshot? _item;
                                 'offer': offerscontroller.text,
                                 'status': 1,
                                 'createdat': DateTime.now(),
-                                'productImage': imageurl
+                                'productImage': _imageurl
                               }).then((value) {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text("Product Added")));

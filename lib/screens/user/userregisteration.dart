@@ -120,7 +120,7 @@ class _UserRegisterationState extends State<UserRegisteration> {
               TextFormField(
                 validator: (value) {
                   if (value!.length <= 5) {
-                    return "Invalid Password";
+                    return "Password should be more than 5";
                   }
                 },
                 controller: confirmController,

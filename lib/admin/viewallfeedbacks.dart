@@ -18,7 +18,7 @@ class ViewAllFeedbacksAdmin extends StatefulWidget {
 }
 
 class _ViewAllFeedbacksAdminState extends State<ViewAllFeedbacksAdmin> {
-  
+
   TextEditingController replyController=TextEditingController();
   final key=GlobalKey<FormState>();
 
@@ -56,7 +56,7 @@ class _ViewAllFeedbacksAdminState extends State<ViewAllFeedbacksAdmin> {
                   height: MediaQuery.of(context).size.height * 0.75,
                   child: StreamBuilder<QuerySnapshot>(
                     stream: FirebaseFirestore.instance
-                        .collection('feedbackstore')
+                        .collection('feedbackstore').where('userid',isEqualTo: widget.id)
                         .snapshots(),
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
@@ -78,7 +78,7 @@ class _ViewAllFeedbacksAdminState extends State<ViewAllFeedbacksAdmin> {
                                         child: Card(
                                           elevation: 5.0,
                                           child: Container(
-                                              //color: Colors.red,
+                                            //color: Colors.red,
                                               height: 150,
                                               width: MediaQuery.of(context)
                                                   .size
@@ -87,77 +87,77 @@ class _ViewAllFeedbacksAdminState extends State<ViewAllFeedbacksAdmin> {
                                                 children: [
                                                   Align(
                                                     alignment:
-                                                        Alignment(-0.9, 0.0),
+                                                    Alignment(-0.9, 0.0),
                                                     child: Container(
                                                         padding:
-                                                            EdgeInsets.all(10),
+                                                        EdgeInsets.all(10),
                                                         //color: Colors.grey,
                                                         width: MediaQuery.of(
-                                                                    context)
-                                                                .size
-                                                                .width -
+                                                            context)
+                                                            .size
+                                                            .width -
                                                             160,
                                                         height: 180,
                                                         child: Column(
                                                           mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .center,
+                                                          MainAxisAlignment
+                                                              .center,
                                                           crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
+                                                          CrossAxisAlignment
+                                                              .start,
                                                           children: [
                                                             AppText(
                                                               text: feed[index]
-                                                                  ['title'],
-                                                             color: Colors
+                                                              ['title'],
+                                                              color: Colors
                                                                   .black87,
                                                             ),
                                                             AppText(
-                                                             text: feed[index]
-                                                                  ['sellername'],
-                                                             color: Colors
+                                                              text: feed[index]
+                                                              ['sellername'],
+                                                              color: Colors
                                                                   .black45,
                                                               size: 12,
                                                             ),
                                                             AppText(
-                                                             text: feed[index][
-                                                                  'description'],
-                                                             color: Colors
+                                                              text: feed[index][
+                                                              'description'],
+                                                              color: Colors
                                                                   .black45,
                                                               size: 12,
                                                             ),
                                                             Container(
                                                                 height: 40,
                                                                 width: MediaQuery.of(
-                                                                            context)
-                                                                        .size
-                                                                        .width -
+                                                                    context)
+                                                                    .size
+                                                                    .width -
                                                                     160,
                                                                 child: Row(
                                                                   mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .spaceBetween,
+                                                                  MainAxisAlignment
+                                                                      .spaceBetween,
                                                                   children: [
                                                                     feed[index]['replystatus'] ==
-                                                                            1
+                                                                        1
                                                                         ? AppText(
-                                                                            text:
-                                                                                "Replied",
-                                                                           size:
-                                                                                16,
-                                                                            fw: FontWeight.w700,
-                                                                           color:
-                                                                                Colors.green,
-                                                                          )
+                                                                      text:
+                                                                      "Replied",
+                                                                      size:
+                                                                      16,
+                                                                      fw: FontWeight.w700,
+                                                                      color:
+                                                                      Colors.green,
+                                                                    )
                                                                         : AppText(
-                                                                            text:
-                                                                                "Not Replied",
-                                                                           size:
-                                                                                16,
-                                                                            fw: FontWeight.w700,
-                                                                            color:
-                                                                                Colors.red,
-                                                                          ),
+                                                                      text:
+                                                                      "Not Replied",
+                                                                      size:
+                                                                      16,
+                                                                      fw: FontWeight.w700,
+                                                                      color:
+                                                                      Colors.red,
+                                                                    ),
                                                                     // feed[index]['replystatus'] ==
                                                                     //         0
                                                                     //     ? IconButton(
@@ -262,22 +262,22 @@ class _ViewAllFeedbacksAdminState extends State<ViewAllFeedbacksAdmin> {
                                       ),
                                       feed[index]['category'] == "Store"
                                           ? Align(
-                                              alignment: Alignment(0.8, -0.9),
-                                              child: Container(
-                                                height: 30,
-                                                width: 150,
-                                                decoration: BoxDecoration(
-                                                    color: Colors.purple,
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            5)),
-                                                child: Center(
-                                                    child: AppText(
-                                                  text: "Store",
-                                                  color: Colors.white,
-                                                )),
-                                              ),
-                                            )
+                                        alignment: Alignment(0.8, -0.9),
+                                        child: Container(
+                                          height: 30,
+                                          width: 150,
+                                          decoration: BoxDecoration(
+                                              color: Colors.purple,
+                                              borderRadius:
+                                              BorderRadius.circular(
+                                                  5)),
+                                          child: Center(
+                                              child: AppText(
+                                                text: "Store",
+                                                color: Colors.white,
+                                              )),
+                                        ),
+                                      )
                                           : SizedBox.shrink(),
                                     ],
                                   ),

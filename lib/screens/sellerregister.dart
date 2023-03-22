@@ -136,7 +136,7 @@ class _SellerRegisterationState extends State<SellerRegisteration> {
               TextFormField(
                 validator: (value) {
                   if (value!.length <= 5) {
-                    return "Invalid Password";
+                    return "Password should be more than 5";
                   }
                 },
                 controller: passwordController,

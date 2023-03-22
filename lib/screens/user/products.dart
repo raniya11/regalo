@@ -116,6 +116,7 @@ class _ProductsPageState extends State<ProductsPage> {
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: priaryColor,
         title: Text('Shopping'),
         actions: <Widget>[
           IconButton(
@@ -157,7 +158,7 @@ class _ProductsPageState extends State<ProductsPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Container(
-                color: widget.imgurl == null ? Colors.transparent : priaryColor,
+               // color: widget.imgurl == null ? Colors.transparent : priaryColor,
                 height: size.height / 2,
                 child: Stack(
                   children: [
@@ -180,7 +181,7 @@ class _ProductsPageState extends State<ProductsPage> {
                         child: Container(
                           child: AppText(
                             text: widget.name.toString(),
-                            color: Colors.white,
+                            color: Colors.black,
                             size: 30,
                             fw: FontWeight.bold,
                           ),

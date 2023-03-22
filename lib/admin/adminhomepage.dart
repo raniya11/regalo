@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:regalo/admin/feedbackviewadmin.dart';
+import 'package:regalo/admin/viewallpayments.dart';
 import 'package:regalo/admin/viewallsellers.dart';
 import 'package:regalo/admin/viewallusers.dart';
 import 'package:regalo/common/loginpage.dart';
@@ -80,7 +82,7 @@ padding: EdgeInsets.all(20),
                   InkWell(
                     onTap: (){
 
-                      //Navigator.push(context, MaterialPageRoute(builder: (context)=>FeedbackPage()));
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewAllFeedbacksAdmin()));
                     },
                     child: MyContainer(text: "View All Feedback",
                       ht: 100,width: 160,color: priaryColor,
@@ -92,7 +94,7 @@ padding: EdgeInsets.all(20),
                   child: InkWell(  
                     onTap: (){
 
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>PaymentDetails()));
+                       Navigator.push(context, MaterialPageRoute(builder: (context)=>ViewPaymentsAdmin()));
                     },
                     child: MyContainer(text: "View All Payment",
                       ht: 100,width: 160,color: priaryColor,

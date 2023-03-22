@@ -27,6 +27,16 @@ class _AddProductsPageState extends State<AddProductsPage> {
 
   var imageurl;
 
+
+
+
+  bool? isItemSelected;
+  String? selecteditem;
+
+  var bookingid;
+  var imgurl;
+  int? _selectedItemIndex;
+
   String? _category;
   List<String> categories = ["Scrapbooks", "Frames", "Hamper", "Bouquet"];
   TextEditingController productNamecontroller = TextEditingController();
@@ -47,6 +57,8 @@ class _AddProductsPageState extends State<AddProductsPage> {
     productId = uuid.v1();
     super.initState();
   }
+  List? item=["Small","Medium ","Large"];
+
 
   @override
   Widget build(BuildContext context) {
@@ -204,6 +216,38 @@ class _AddProductsPageState extends State<AddProductsPage> {
                     ),
                   ),
                 ),
+
+
+                Container(
+                  height: 50,
+                  child: ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    itemCount:item!.length,
+                    itemBuilder: (context, index) {
+                      bool isSelected = _selectedItemIndex == index;
+                      return GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            _selectedItemIndex = index;
+                            selecteditem = (item![index]);
+                            print(selecteditem);
+                          });
+                          // Do something when the chip is selected
+                          print('Selected item: ${item![index]}');
+                        },
+                        child: Chip(
+                          label: Text(item![index]),
+                          backgroundColor:
+                          isSelected ? Colors.blue : Colors.grey,
+                          labelStyle: TextStyle(
+                            color:
+                            isSelected ? Colors.white : Colors.black,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
                 SizedBox(
                   height: 30,
                 ),
@@ -236,6 +280,7 @@ class _AddProductsPageState extends State<AddProductsPage> {
                               'offer': offerscontroller.text,
                               'status': 1,
                               'createdat': DateTime.now(),
+                              'size':item,
                               'productImage': imageurl
                             }).then((value) {
                               ScaffoldMessenger.of(context).showSnackBar(

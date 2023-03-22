@@ -59,6 +59,14 @@ class _ViewAllFeedbacksSellerState extends State<ViewAllFeedbacksSeller> {
                         .collection('feedbackstore').where('sellerid',isEqualTo: widget.id).where('category',isEqualTo: "Store")
                         .snapshots(),
                     builder: (_, snapshot) {
+
+                      if(snapshot.hasData && snapshot.data!.docs.length==0)
+                      {
+
+                        return Center(
+                          child: Text("No feedbacks yet!"),
+                        );
+                      }
                       if (snapshot.hasData) {
                         List<QueryDocumentSnapshot> feed = snapshot.data!.docs;
 
@@ -285,6 +293,8 @@ class _ViewAllFeedbacksSellerState extends State<ViewAllFeedbacksSeller> {
                               );
                             });
                       }
+
+
 
                       return Center(
                         child: CircularProgressIndicator(),

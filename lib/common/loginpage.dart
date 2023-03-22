@@ -34,8 +34,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Form(
             key: _formKey,
             child: CustomScrollView(
-
-              slivers:[
+              slivers: [
                 SliverFillRemaining(
                   hasScrollBody: false,
                   child: Column(
@@ -57,15 +56,16 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         validator: (value) {
                           if (value!.isEmpty || value.length <= 4) {
-                            return "Enter a valid username";
+                            return "Enter a valid email";
                           }
                         },
                         controller: usernameController,
                         decoration: const InputDecoration(
                             enabledBorder: OutlineInputBorder(),
                             focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: Colors.pink, width: 3)),
-                            hintText: "Username"),
+                                borderSide:
+                                    BorderSide(color: Colors.pink, width: 3)),
+                            hintText: "Email"),
                       ),
                       SizedBox(
                         height: 10,
@@ -73,7 +73,7 @@ class _LoginPageState extends State<LoginPage> {
                       TextFormField(
                         validator: (value) {
                           if (value!.length <= 5) {
-                            return "Invalid Password";
+                            return "Password should be more than 5";
                           }
                         },
                         controller: passwordController,
@@ -82,7 +82,8 @@ class _LoginPageState extends State<LoginPage> {
                         decoration: InputDecoration(
                           enabledBorder: OutlineInputBorder(),
                           focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.pink, width: 3)),
+                              borderSide:
+                                  BorderSide(color: Colors.pink, width: 3)),
                           hintText: "Password",
                           suffixIcon: IconButton(
                             onPressed: () {
@@ -98,13 +99,13 @@ class _LoginPageState extends State<LoginPage> {
                             },
                             icon: showPass == true
                                 ? Icon(
-                              Icons.visibility,
-                              color: priaryColor.withOpacity(0.6),
-                            )
+                                    Icons.visibility,
+                                    color: priaryColor.withOpacity(0.6),
+                                  )
                                 : Icon(
-                              Icons.visibility_off,
-                              color: priaryColor,
-                            ),
+                                    Icons.visibility_off,
+                                    color: priaryColor,
+                                  ),
                           ),
                         ),
                       ),
@@ -115,63 +116,74 @@ class _LoginPageState extends State<LoginPage> {
                         child: InkWell(
                           onTap: () {
                             if (_formKey.currentState!.validate()) {
-                              if(usernameController.text.trim()=="admin@gmail.com" && passwordController.text.trim()=='12345678'){
-
-                                Navigator.push(context, MaterialPageRoute(builder: (context)=>AdminHomePage()));
-
-                              }
-                              else{
-
+                              if (usernameController.text.trim() ==
+                                      "admin@gmail.com" &&
+                                  passwordController.text.trim() ==
+                                      '12345678') {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AdminHomePage()));
+                              } else {
                                 FirebaseAuth.instance
                                     .signInWithEmailAndPassword(
-                                    email: usernameController.text.trim(),
-                                    password: passwordController.text)
+                                        email: usernameController.text.trim(),
+                                        password: passwordController.text)
                                     .then((value) {
                                   FirebaseFirestore.instance
                                       .collection('users')
                                       .doc(value.user!.uid)
-                                      .get().then((value) {
-
-                                    if(value.data()!['usertype']=="user" ){
-
+                                      .get()
+                                      .then((value) {
+                                    if (value.data()!['usertype'] == "user") {
                                       print(value.data()!['usertype']);
                                       print(value.data()!['name']);
 
-
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>UserHomePage(
-
-
-                                        name: value.data()!['name'],
-                                        email:  value.data()!['email'],
-                                        id:  value.data()!['uid'],
-                                        status:  value.data()!['status'],
-                                      )), (route) => false);
-
-                                    }
-
-                                    else if(value.data()!['usertype']=="seller"){
-
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  UserHomePage(
+                                                    name: value.data()!['name'],
+                                                    email:
+                                                        value.data()!['email'],
+                                                    id: value.data()!['uid'],
+                                                    status:
+                                                        value.data()!['status'],
+                                                  )),
+                                          (route) => false);
+                                    } else if (value.data()!['usertype'] ==
+                                        "seller") {
                                       //print(value.data()!['usertype'].toString());
-                                      Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>SellerHomePage(
-
-
-                                        name: value.data()!['name'],
-                                        email:  value.data()!['email'],
-                                        address: value.data()!['address'],
-                                        pincode: value.data()!['pincode'],
-                                        phone: value.data()!['phone'],
-                                        id:  value.data()!['uid'],
-                                        status:  value.data()!['status'],
-                                      )), (route) => false);
-
-
-
+                                      Navigator.pushAndRemoveUntil(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  SellerHomePage(
+                                                    name: value.data()!['name'],
+                                                    email:
+                                                        value.data()!['email'],
+                                                    address: value
+                                                        .data()!['address'],
+                                                    pincode: value
+                                                        .data()!['pincode'],
+                                                    phone:
+                                                        value.data()!['phone'],
+                                                    id: value.data()!['uid'],
+                                                    status:
+                                                        value.data()!['status'],
+                                                  )),
+                                          (route) => false);
                                     }
                                   });
+                                }).catchError((e) {
+                                  List err;
+                                  err = e.toString().split("]");
+                                  var msg = err[1];
 
-
-
-
+                                  return ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                          content: Text(msg.toString())));
                                 });
                               }
                             }
@@ -223,7 +235,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 )
-              ] ,
+              ],
             ),
           ),
         ),
